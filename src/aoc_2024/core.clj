@@ -30,7 +30,9 @@
   (println "Running solutions!")
   (doseq [day days]
     (run-day day)))
-(run-days)
+
+;; For repl
+;(run-days)
 
 (defn -main [& args]
   (run-days))
