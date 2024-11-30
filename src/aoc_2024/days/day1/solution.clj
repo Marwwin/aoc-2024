@@ -2,14 +2,15 @@
   (:require
    [aoc-2024.utils :refer [load-data]]))
 
-(defn solve [input]
-  (let [input (load-data (str *ns*) input)]
-    (println input (count input))
-    (println "hello i am solve")))
+(defn part1 [input])
 
-(solve :test)
+(defn part2 [input])
 
-(defn part1 [])
+(defn solve [current-ns input]
+  (let [input (load-data current-ns input)]
+    {:part1 (part1 input)
+     :part2 (part2 input)}))
 
-(defn part2 [])
+;; For repl
+; (solve (str *ns*) :input)
 
