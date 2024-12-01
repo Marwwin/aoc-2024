@@ -9,25 +9,25 @@
 
 (defn part2 [[lefts rights]]
   (let [rights-count (frequencies rights)]
-    (->> lefts
-         (reduce (fn [acc n] (+ acc (* n (get rights-count n 0)))) 0))))
+    (->> lefts (reduce (fn [acc n] (+ acc (* n (get rights-count n 0)))) 0))))
 
 (defn- parse-input [input]
-  (loop [x (first input)
-         xs (rest input)
-         lefts []
+  (loop [x      (first input)
+         xs     (rest input)
+         lefts  []
          rights []]
     (if-not (seq x)
       [lefts rights]
-      (let [[l r] (str/split x #"   ")]
+      (let [[left right] (str/split x #"   ")]
         (recur (first xs)
-               (rest xs)
-               (conj lefts (parse-long l))
-               (conj rights (parse-long r)))))))
+               (rest  xs)
+               (conj  lefts (parse-long left))
+               (conj  rights (parse-long right)))))))
 
 (defn solve [current-ns input]
-  (let [input (load-data current-ns input)
-        input (parse-input input)]
+  (let [input (->> input
+                   (load-data current-ns)
+                   parse-input)]
     {:part1 (part1 input)
      :part2 (part2 input)}))
 
