@@ -24,9 +24,8 @@
                (conj  lefts (parse-long left))
                (conj  rights (parse-long right)))))))
 
-(defn solve [current-ns input]
-  (let [input (->> input
-                   (load-data current-ns)
+(defn solve [current-ns input-type]
+  (let [input (-> (load-data current-ns input-type)
                    parse-input)]
     {:part1 (part1 input)
      :part2 (part2 input)}))
