@@ -1,4 +1,4 @@
-(ns aoc-2024.day-template
+(ns aoc-2024.days.day2.solution
   (:require
    [aoc-2024.utils :refer [load-data]]))
 
