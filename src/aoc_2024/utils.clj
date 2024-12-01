@@ -18,3 +18,10 @@
          slurp
          (str/split-lines)
          (map str/trim))))
+
+(defn log [x]
+  (println x)
+  x)
+
+
+
