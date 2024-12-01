@@ -23,5 +23,7 @@
   (println x)
   x)
 
+(defn zip [& colls]
+  (apply map vector colls))
 
 

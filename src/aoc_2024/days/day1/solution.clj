@@ -1,10 +1,10 @@
 (ns aoc-2024.days.day1.solution
   (:require
-   [aoc-2024.utils :refer [load-data]]
+   [aoc-2024.utils :refer [load-data zip]]
    [clojure.string :as str]))
 
 (defn part1 [[lefts rights]]
-  (->> (map vector (sort lefts) (sort rights))
+  (->> (zip (sort lefts) (sort rights))
        (reduce (fn [acc [left right]] (+ acc (abs (- left right)))) 0)))
 
 (defn part2 [[lefts rights]]
@@ -32,5 +32,5 @@
      :part2 (part2 input)}))
 
 ;; For repl
-;(solve (str *ns*) :input)
+(solve (str *ns*) :input)
 
