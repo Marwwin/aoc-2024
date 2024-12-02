@@ -9,7 +9,8 @@
 
 (defn part2 [[lefts rights]]
   (let [rights-count (frequencies rights)]
-    (->> lefts (reduce (fn [acc n] (+ acc (* n (get rights-count n 0)))) 0))))
+    (->> lefts
+         (reduce (fn [acc n] (+ acc (* n (get rights-count n 0)))) 0))))
 
 (defn- parse-input [input]
   (loop [x      (first input)
