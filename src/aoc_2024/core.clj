@@ -2,7 +2,8 @@
 
 ;; Put all days that should get executed here
 ;; input should be :test or :input
-(def days [{:day 1 :input :input}])
+(def days [{:day 1 :input :input}
+           {:day 2 :input :input}])
 
 (defn- namespace-for-day [day]
   (str "aoc-2024.days.day" day ".solution"))
