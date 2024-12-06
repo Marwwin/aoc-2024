@@ -23,6 +23,10 @@
   (println x)
   x)
 
+(defn log-n-go [x]
+  (println x)
+  x)
+
 (defn zip [& colls]
   (apply map vector colls))
 
