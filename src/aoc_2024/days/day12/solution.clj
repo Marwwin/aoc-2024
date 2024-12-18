@@ -64,7 +64,42 @@
 
 (defn walk-perimeter [perimeter area]
   (println perimeter)
-  (let [start (assoc (get-top-right-in-perimeter area) :direction :east)
+  (let [start (assoc (get-top-right-in-perimeter perimeter) :direction :east) ]
+    (loop [stack (list start)
+           visited #{start}
+           ps perimeter
+           result 0]
+      (if (empty? stack)
+        (do (println ps) result)
+        (let [curr (peek stack)]
+          (let [new-stack (pop stack)
+                [left forward right forward-left forward-right] [
+                    (matrix/coord-in-coll ps (matrix/turn-n-move-left curr))
+                    (matrix/coord-in-coll ps (matrix/move curr))
+                    (matrix/coord-in-coll ps (matrix/turn-n-move-right curr))
+                    (matrix/coord-in-coll ps (-> curr matrix/move matrix/turn-n-move-left))
+                    (matrix/coord-in-coll ps (-> curr matrix/move matrix/turn-n-move-right))
+                                                                 ]
+                _ (println left forward right forward-left forward-right)
+               {:keys [next-coord res]} (cond
+                             (->> curr matrix/turn-n-move-right matrix/coords (contains? area) not)  {:next-coord (matrix/turn-n-move-right curr):res 1}
+                             (->> curr matrix/move matrix/coords (contains? area) not)  {:next-coord (matrix/move curr) :res 0}
+                             (->> curr matrix/turn-n-move-left matrix/coords (contains? area) not)  {:next-coord (matrix/turn-n-move-left curr) :res 1}
+                             :else {:next-coord (matrix/turn-180 curr) :res 2})
+               new-ps (remove #{(matrix/coords curr)} ps)]
+            (println "removing" #{(matrix/coords curr)} )
+            (println "removed " new-ps)
+            (println "")
+;              (println next-coord)
+            (recur (if (contains? visited next-coord) new-stack (conj new-stack next-coord))
+                   (conj visited curr)
+                   new-ps
+                   (+ result res))))))))
+
+
+(defn walk-perimeter2 [perimeter area]
+  (println perimeter)
+  (let [start (assoc (first perimeter) :direction :east)
         start (matrix/move start :north)]
    ; (println "start walk perim" start)
     (loop [stack (list start)
@@ -97,8 +132,9 @@
           (if (contains? all-visited coord)
             (recur (inc i) all-visited result)
             (let [{:keys [visited perimeter]} (bfs m coord target)
+                  _ (println "perim for target" target)
                   perimeter-len (walk-perimeter perimeter visited)]
-;               (println "done" target  (count visited) perimeter-len)
+               (println "done" target  (count visited) perimeter-len)
               (recur (inc i) (into all-visited visited) (+ result (* (count visited) perimeter-len))))))))))
 
 (defn solve [current-ns input-type]

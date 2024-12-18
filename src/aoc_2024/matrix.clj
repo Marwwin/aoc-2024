@@ -67,6 +67,9 @@
 (defn at [m {:keys [x y]}]
   (get-in m [y x] nil))
 
+(defn coord-in-coll [coll {:keys [x y]}]
+  (some #{{:x x :y y}} coll))
+
 (defn find-all-elements-in-matrix [m e]
   (flatten
    (for [y (range (count m))
