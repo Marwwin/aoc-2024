@@ -46,7 +46,6 @@
     (reduce + checksum)))
 
 (defn- swap-files [mem target end-i]
-;   (println "swapping" target "at " end-i)
   (let [len (count target)]
     (loop [i 0
            prev []
@@ -54,7 +53,6 @@
       (if (> i end-i)
         mem
         (let [c (first after)]
-;           (println i c (count c) (= (first c) :empty) (>= (count c) len))
           (if (and (= (first c) :empty)
                    (>= (count c) len))
             (assoc
@@ -77,7 +75,7 @@
 
 ;; TODO there might be an issue with index now after swap-files
 (defn part2 [{files :fs empties :sp :as a}]
-  (let [disk-map (map-all2 files empties)
+  (let [disk-map (map-all files empties)
         _ (println "created disk-map")
         fragmented-fs (loop [end-i (dec (count disk-map))
                              mem disk-map]
@@ -114,7 +112,7 @@
                   (->> (map parse-long))
                   split-files-n-space)]
 
-    {;       :part1 (part1 input)
+    {:part1 (part1 input)
      :part2 (time (part2 input))}))
 
 ;; For repl
